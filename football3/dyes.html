@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>برنامه فوتبال هفته</title>
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+            direction: rtl;
+            background: #f5f5f5;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 8px 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        .match {
+            background: white;
+            margin: 10px auto;
+            padding: 10px 15px;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .match img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .teams {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: bold;
+        }
+
+        .vs {
+            margin: 0 8px;
+            color: #555;
+        }
+
+        .time {
+            font-weight: bold;
+            color: #007bff;
+            min-width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>برنامه بازی‌های هفته فوتبال</h2>
+    <select id="daySelect">
+        <option value="شنبه">شنبه</option>
+        <option value="یکشنبه">یکشنبه</option>
+        <option value="دوشنبه">دوشنبه</option>
+        <option value="سه‌شنبه">سه‌شنبه</option>
+        <option value="چهارشنبه">چهارشنبه</option>
+        <option value="پنج‌شنبه">پنج‌شنبه</option>
+        <option value="جمعه">جمعه</option>
+    </select>
+    <div id="matchesContainer"></div>
+
+    <script>
+        const matchesData = {
+            شنبه: [
+                { team1: "پرسپولیس", logo1: "https://upload.wikimedia.org/wikipedia/fa/thumb/0/05/FC_Persepolis_Official_Logo.svg/250px-FC_Persepolis_Official_Logo.svg.png", team2: "استقلال", logo2: "https://upload.wikimedia.org/wikipedia/fa/thumb/2/28/Esteghlal_Tehran_FC_logo.svg/250px-Esteghlal_Tehran_FC_logo.svg.png", time: "18:00" },
+                { team1: "تراکتور", logo1: "https://img9.irna.ir/d/r2/2024/07/29/4/171304347.jpg?ts=1722250182913", team2: "سپاهان", logo2: "https://upload.wikimedia.org/wikipedia/fa/thumb/8/80/Sepahan_New_Logo.svg/250px-Sepahan_New_Logo.svg.png", time: "20:00" },
+                { team1: "بایرن مونیخ", logo1: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg/250px-FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg.png", team2: "دورتموند", logo2: "https://upload.wikimedia.org/wikipedia/commons/6/67/Borussia_Dortmund_logo.svg", time: "22:00" },
+            ],
+            یکشنبه: [
+                { team1: "لیورپول", logo1: "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg", team2: "منچستر یونایتد", logo2: "https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg", time: "21:00" },
+                { team1: "بارسلونا", logo1: "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg", team2: "رئال مادرید", logo2: "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg", time: "23:00" },
+            ],
+            دوشنبه: [
+                { team1: "پاری سن ژرمن", logo1: "https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg", team2: "مارسی", logo2: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Olympique_Marseille_logo.svg/800px-Olympique_Marseille_logo.svg.png", time: "22:00" },
+                { team1: "میلان", logo1: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_AC_Milan.svg", team2: "اینتر", logo2: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/250px-FC_Internazionale_Milano_2021.svg.png", time: "21:15" },
+            ],
+            سه‌شنبه: [
+                { team1: "یوونتوس", logo1: "https://cdn.oddrun.ir/@s/teams/p47.png", team2: "ناپولی", logo2: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDYH_vR7azQimMDmhJOMk3dTt7mqz3GN3w1w&s", time: "20:00" },
+                { team1: "آرسنال", logo1: "https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg", team2: "تاتنهام", logo2: "https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg", time: "22:00" },
+            ],
+            چهارشنبه: [
+                { team1: "چلسی", logo1: "https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg", team2: "اتلتیکو مادرید", logo2: "https://upload.wikimedia.org/wikipedia/fa/thumb/f/f9/Atletico_Madrid_Logo_2024.svg/1200px-Atletico_Madrid_Logo_2024.svg.png", time: "21:30" },
+
+
+                { team1: "رم", logo1: "https://parsadehqan.ir/uploads/23290bf0d39f4157a4c839d524832943.gif", team2: "استون ویلا", logo2: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa9Ag7mT5fCDo51bITanfp_aVGc0b95M3UFw&s", time: "20:00" },
+                { team1: "نیوکاسل", logo1: "https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Newcastle_United_Logo.svg/800px-Newcastle_United_Logo.svg.png", team2: "لیورپول", logo2: "https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Liverpool_FC.svg/800px-Liverpool_FC.svg.png", time: "22:00" },
+            ],
+            پنج‌شنبه: [
+                { team1: "موناکو", logo1: "https://upload.wikimedia.org/wikipedia/fa/6/65/AS_Monaco_%282013%29fa.png", team2: "لیون", logo2: "https://upload.wikimedia.org/wikipedia/fa/e/e5/488px-Olympique_Lyonnaisfa.png", time: "19:45" },
+
+                { team1: "پرسپولیس", logo1: "https://upload.wikimedia.org/wikipedia/fa/thumb/0/05/FC_Persepolis_Official_Logo.svg/250px-FC_Persepolis_Official_Logo.svg.png", team2: "الهلی", logo2: "https://upload.wikimedia.org/wikipedia/fa/6/6e/Al_Ahli_logo.png", time: "17:30" },
+
+                { team1: "استقلال", logo1: "https://upload.wikimedia.org/wikipedia/fa/thumb/2/28/Esteghlal_Tehran_FC_logo.svg/250px-Esteghlal_Tehran_FC_logo.svg.png", team2: "العین", logo2: "https://cdn.oddrun.ir/@s/teams/e5e.png", time: "21:30" },
+            ],
+            جمعه: [
+                { team1: "بنفیکا", logo1: "https://upload.wikimedia.org/wikipedia/fa/thumb/a/a2/SL_Benfica_logo.svg/1200px-SL_Benfica_logo.svg.png", team2: "پورتو", logo2: "https://upload.wikimedia.org/wikipedia/ar/thumb/f/f1/FC_Porto.svg/1200px-FC_Porto.svg.png", time: "18:30" },
+
+
+                { team1: "النصر", logo1: "https://cdn.oddrun.ir/@s/teams/E4r.png", team2: "اینترمیامی", logo2: "https://upload.wikimedia.org/wikipedia/fa/thumb/5/5c/Inter_Miami_CF_logo.svg/1200px-Inter_Miami_CF_logo.svg.png", time: "20:00" },
+
+
+                { team1: "الهلال", logo1: "https://upload.wikimedia.org/wikipedia/commons/5/55/Al_Hilal_SFC_Logo.svg", team2: "رئال مادرید", logo2: "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg", time: "22:30" },
+            ]
+        };
+
+        const container = document.getElementById("matchesContainer");
+        const daySelect = document.getElementById("daySelect");
+
+        function showMatches(day) {
+            container.innerHTML = "";
+            let matches = [];
+            switch (day) {
+                case "شنبه": matches = matchesData["شنبه"]; break;
+                case "یکشنبه": matches = matchesData["یکشنبه"]; break;
+                case "دوشنبه": matches = matchesData["دوشنبه"]; break;
+                case "سه‌شنبه": matches = matchesData["سه‌شنبه"]; break;
+                case "چهارشنبه": matches = matchesData["چهارشنبه"]; break;
+                case "پنج‌شنبه": matches = matchesData["پنج‌شنبه"]; break;
+                case "جمعه": matches = matchesData["جمعه"]; break;
+                default: matches = [];
+            }
+
+            if (matches.length === 0) {
+                container.innerHTML = "<p>بازی‌ای برای این روز یافت نشد.</p>";
+                return;
+            }
+
+            matches.forEach(match => {
+                const div = document.createElement("div");
+                div.className = "match";
+                div.innerHTML = `
+        <img src="${match.logo1}" alt="${match.team1}" />
+        <div class="teams">${match.team1} <span class="vs">VS</span> ${match.team2}</div>
+        <img src="${match.logo2}" alt="${match.team2}" />
+        <div class="time">${match.time}</div>
+      `;
+                container.appendChild(div);
+            });
+        }
+
+        daySelect.addEventListener("change", e => {
+            showMatches(e.target.value);
+        });
+
+        // نمایش بازی‌های شنبه به طور پیش‌فرض
+        showMatches(daySelect.value);
+    </script>
+</body>
+
+</html>
