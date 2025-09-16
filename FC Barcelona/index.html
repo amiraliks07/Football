@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>باشگاه فوتبال بارسلونا — 2025</title>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-red: #A50044;
+      --primary-blue: #004D98;
+      --dark-bg: #0a0a0a;
+      --light-text: #f0f0f0;
+      --accent: #222;
+      --highlight: #f4a261;
+      --card-bg: #111;
+      --border-color: #333;
+      --shadow-color: rgba(0, 0, 0, 0.8);
+      --transition: 0.3s ease-in-out;
+      --font-family: 'Vazirmatn', sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0; padding: 0;
+      font-family: var(--font-family);
+      background-color: var(--dark-bg);
+      color: var(--light-text);
+      line-height: 1.6;
+    }
+    a {
+      color: var(--primary-red);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    a:hover {
+      color: var(--highlight);
+    }
+    header {
+      background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-red) 100%);
+      padding: 20px 30px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 4px 10px var(--shadow-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header img.logo {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 2px solid var(--light-text);
+      background: #fff;
+    }
+    header h1 {
+      font-size: 28px;
+      margin: 0;
+      flex-grow: 1;
+      color: var(--light-text);
+      font-weight: 900;
+      text-shadow: 1px 1px 4px black;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 18px;
+      margin: 0; padding: 0;
+    }
+    nav ul li {
+      font-weight: 600;
+    }
+    nav ul li a {
+      padding: 6px 10px;
+      border-radius: 6px;
+      background-color: var(--accent);
+      display: inline-block;
+    }
+    nav ul li a:hover {
+      background-color: var(--primary-red);
+      color: var(--light-text);
+    }
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px 60px;
+    }
+    section {
+      margin-bottom: 60px;
+      background-color: var(--card-bg);
+      padding: 30px 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px var(--shadow-color);
+      border: 1px solid var(--border-color);
+    }
+    section h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 30px;
+      border-bottom: 3px solid var(--primary-red);
+      padding-bottom: 6px;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+    }
+    /* NEWS & TRANSFERS */
+    .news-item, .transfer-item {
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .news-item:last-child, .transfer-item:last-child {
+      border-bottom: none;
+    }
+    .news-item h3, .transfer-item h3 {
+      margin: 0 0 6px 0;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .news-item p.date, .transfer-item p.date {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+    .news-item p.summary, .transfer-item p.summary {
+      margin: 0;
+      font-size: 16px;
+      color: #eee;
+    }
+    /* Grid for Players, Gallery, Legends */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+      gap: 25px;
+    }
+    .player-card, .gallery-item, .legend-card {
+      background-color: var(--accent);
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+      overflow: hidden;
+      transition: transform var(--transition);
+      cursor: default;
+    }
+    .player-card:hover, .gallery-item:hover, .legend-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px var(--primary-red);
+    }
+    .player-card img, .gallery-item img, .legend-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 3px solid var(--primary-red);
+      transition: transform var(--transition);
+    }
+    .player-card:hover img, .gallery-item:hover img, .legend-card:hover img {
+      transform: scale(1.05);
+    }
+    .player-info, .legend-info {
+      padding: 18px 20px;
+      color: var(--light-text);
+    }
+    .player-info h3, .legend-info h3 {
+      margin: 0 0 8px 0;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .player-info p, .legend-info p {
+      margin: 0;
+      font-size: 15px;
+      color: #ccc;
+      line-height: 1.3;
+    }
+    /* Stadium */
+    .stadium-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      align-items: center;
+      justify-content: center;
+    }
+    .stadium-info {
+      flex: 1 1 350px;
+      min-width: 320px;
+      color: var(--light-text);
+    }
+    .stadium-info p {
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+    .stadium-img {
+      flex: 1 1 500px;
+      min-width: 320px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px var(--shadow-color);
+    }
+    .stadium-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    /* Videos */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(380px,1fr));
+      gap: 28px;
+    }
+    .video-card {
+      background-color: var(--accent);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px var(--shadow-color);
+      padding: 10px;
+      transition: box-shadow var(--transition);
+    }
+    .video-card:hover {
+      box-shadow: 0 10px 30px var(--primary-red);
+    }
+    .video-card iframe {
+      width: 100%;
+      height: 220px;
+      border-radius: 10px;
+      border: none;
+      display: block;
+    }
+    .video-card h4 {
+      margin: 12px 0 6px 0;
+      font-size: 20px;
+      color: var(--primary-red);
+      font-weight: 900;
+    }
+    /* Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+      gap: 22px;
+    }
+    /* Captions */
+    .caption {
+      font-size: 13px;
+      color: #888;
+      margin-top: 8px;
+      font-style: italic;
+    }
+    /* Responsive */
+    @media(max-width:1024px) {
+      .stadium-section {
+        flex-direction: column;
+      }
+    }
+    @media(max-width:600px) {
+      header {
+        flex-direction: column;
+        gap: 12px;
+      }
+      header h1 {
+        font-size: 22px;
+      }
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img class="logo" src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg" alt="لوگوی بارسلونا" />
+    <h1>باشگاه فوتبال بارسلونا - ۲۰۲۵</h1>
+    <nav>
+      <ul>
+        <li><a href="#news">اخبار</a></li>
+        <li><a href="#transfers">نقل و انتقالات</a></li>
+        <li><a href="#players">بازیکنان</a></li>
+        <li><a href="#legends">اسطوره‌ها</a></li>
+        <li><a href="#stadium">ورزشگاه</a></li>
+        <li><a href="#women">تیم زنان</a></li>
+        <li><a href="#gallery">گالری</a></li>
+        <li><a href="#videos">گل‌های به یادماندنی</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <!-- اخبار جدید -->
+    <section id="news" class="section news">
+      <h2>اخبار جدید بارسلونا ۲۰۲۵</h2>
+      <article class="news-item">
+        <h3><a href="https://www.fcbarcelona.com/en/football/news/3315610/roberto-leaves-barcelona-after-13-years" target="_blank" rel="noopener">روبرتو پس از ۱۳ سال بارسلونا را ترک کرد</a></h3>
+        <p class="date">۲۰۲۵/۰۷/۳۰</p>
+        <p class="summary">مدافع باتجربه باشگاه پس از پایان قراردادش تصمیم به جدایی گرفت و فصل آینده در لیگ برتر بازی خواهد کرد.</p>
+      </article>
+      <article class="news-item">
+        <h3><a href="https://www.bbc.com/sport/football/66423578" target="_blank" rel="noopener">تمرکز بارسلونا روی استعدادهای جوان برای آینده</a></h3>
+        <p class="date">۲۰۲۵/۰۸/۰۸</p>
+        <p class="summary">باشگاه در حال توسعه برنامه‌های جوان‌گرایی خود و ارتقای تیم اصلی است.</p>
+      </article>
+      <article class="news-item">
+        <h3><a href="https://www.espn.com/soccer/barcelona/story/4649817/barcelona-expect-exciting-season-with-new-signings" target="_blank" rel="noopener">انتظارات بارسلونا از فصل هیجان‌انگیز با خریدهای جدید</a></h3>
+        <p class="date">۲۰۲۵/۰۸/۰۵</p>
+        <p class="summary">مدیران باشگاه از تغییرات تیم راضی‌اند و امیدوار به رقابت در بالاترین سطح‌های اروپا هستند.</p>
+      </article>
+    </section>
+
+    <section id="transfers" class="section transfers">
+      <h2>نقل و انتقالات تابستان ۲۰۲۵</h2>
+      <article class="transfer-item">
+        <h3>جذب هافبک جوان از آژاکس</h3>
+        <p class="date">۲۰۲۵/۰۸/۰۷</p>
+        <p class="summary">بارسلونا با خرید یک هافبک جوان هلندی قرارداد بسته است تا قدرت خط میانی خود را افزایش دهد.</p>
+      </article>
+      <article class="transfer-item">
+        <h3>جدایی بازیکن کلیدی برای تیم لیگ برتری</h3>
+        <p class="date">۲۰۲۵/۰۷/۳۰</p>
+        <p class="summary">یکی از بازیکنان مهم باشگاه به تیم لیگ برتری انگلستان پیوست.</p>
+      </article>
+      <article class="transfer-item">
+        <h3>بازگشت قرضی مهاجم به تیم</h3>
+        <p class="date">۲۰۲۵/۰۸/۰۲</p>
+        <p class="summary">یک مهاجم قرضی که فصل قبل در تیمی دیگر بازی کرده بود به بارسلونا بازگشته است.</p>
+      </article>
+    </section>
+
+ 
+    <section id="players" class="section players">
+      <h2>بازیکنان اصلی بارسلونا ۲۰۲۵</h2>
+      <div class="grid-3">
+        <div class="player-card">
+          <img src="https://app.akharinkhabar.ir/images/2025/03/08/c70532d3-8f5e-40c6-b4f9-56cff798b579.webp" alt="رابرت لواندوفسکی" />
+          <div class="player-info">
+            <h3>رابرت لواندوفسکی</h3>
+            <p>مهاجم | شماره ۹</p>
+            <p>یکی از بهترین گلزنان جهان و ستاره تیم بارسلونا.</p>
+          </div>
+        </div>
+        <div class="player-card">
+          <img src="https://newsmedia.tasnimnews.com/Tasnim/Uploaded/Image/1403/02/05/1403020512135322329876474.jpeg" alt="فرنکی دی یونگ" />
+          <div class="player-info">
+            <h3>فرنکی دی یونگ</h3>
+            <p>هافبک | شماره 21</p>
+            <p>بازیکن خلاق و تکنیکی که نقش کلیدی در خط میانی دارد.</p>
+          </div>
+        </div>
+        <div class="player-card">
+          <img src="https://img9.irna.ir/d/r2/2021/05/17/4/168821940.jpg" alt="مارک-آندره تر اشتگن" />
+          <div class="player-info">
+            <h3>مارک-آندره تر اشتگن</h3>
+            <p>دروازه‌بان | شماره 1</p>
+            <p>یکی از بهترین دروازه‌بان‌های جهان با واکنش‌های سریع.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="legends" class="section legends">
+      <h2>اسطوره‌های بارسلونا</h2>
+      <div class="grid-3">
+        <div class="legend-card">
+          <img src="https://media.hamshahrionline.ir/d/2022/02/08/4/4642785.jpg?ts=1644324789000" alt="لیونل مسی" />
+          <div class="legend-info">
+            <h3>لیونل مسی</h3>
+            <p>مهاجم افسانه‌ای و بهترین گلزن تاریخ باشگاه.</p>
+          </div>
+        </div>
+        <div class="legend-card">
+          <img src="https://cdn.passgoal.news/servev2/N1Vt8dZVWpOz/-KML_vekdCE,/%DA%98%D8%A7%D9%88%DB%8C.jpg" alt="ژاوی هرناندز" />
+          <div class="legend-info">
+            <h3>ژاوی هرناندز</h3>
+            <p>کاپیتان و مغز متفکر تیم در دوران طلایی بارسلونا.</p>
+          </div>
+        </div>
+        <div class="legend-card">
+          <img src="https://static1.bartarinha.ir/servev2/jUyY2QwZWExY/5Uwvb7W7Zm0,/file.jpg" alt="آندرس اینیستا" />
+          <div class="legend-info">
+            <h3>آندرس اینیستا</h3>
+            <p>هافبک خلاق و یکی از بهترین بازیکنان تاریخ باشگاه.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="stadium" class="section stadium">
+      <h2>ورزشگاه نیوکمپ</h2>
+      <div class="stadium-section">
+        <div class="stadium-info">
+          <p>نیوکمپ ورزشگاه باشگاه بارسلونا است که در سال ۱۹۵۷ افتتاح شد و ظرفیت آن حدود ۹۹٬۳۵۴ نفر است. این ورزشگاه بزرگ‌ترین ورزشگاه فوتبال در اروپا و یکی از معروف‌ترین‌ها در جهان است.</p>
+          <p>نیوکمپ میزبان بسیاری از دیدارهای مهم و تاریخی بارسلونا بوده و از نظر معماری و تجربه تماشاگران، یکی از بهترین‌ها به شمار می‌آید.</p>
+          <p>آدرس: Carrer d'Aristides Maillol, 12, 08028 Barcelona, Spain</p>
+        </div>
+        <div class="stadium-img">
+          <img src="https://static.barcanews.org/images/news/140305/thumbnail/a99e1a8b-bb1b-43d2-ba95-6cc38bde2906-16-9-discover-aspect-ratio-default-03-1724156614.jpg" alt="ورزشگاه نیوکمپ" />
+        </div>
+      </div>
+    </section>
+
+    <section id="women" class="section women">
+      <h2>تیم زنان بارسلونا</h2>
+      <p>تیم زنان بارسلونا یکی از بهترین و موفق‌ترین تیم‌های فوتبال زنان در جهان است. این تیم قهرمانی‌های متعددی در لیگ زنان اسپانیا و مسابقات اروپایی کسب کرده است و با سبک بازی تکنیکی و هجومی شناخته می‌شود.</p>
+      <div class="grid-3">
+        <div class="player-card">
+          <img src="https://parsfootball.com/na/wp-content/uploads/2025/04/386775.jpg" alt="آیتانا بونماتی" />
+          <div class="player-info">
+            <h3>آیتانا بونماتی</h3>
+            <p>هافبک | شماره 14</p>
+            <p>یکی از بازیکنان کلیدی تیم زنان با تکنیک عالی و هوش بازی بالا.</p>
+          </div>
+        </div>
+        <div class="player-card">
+          <img src="https://news-cdn.varzesh3.com/pictures/2024/11/20/A/ohlfay4g4.png" alt="الکسیه پوتلاس" />
+          <div class="player-info">
+            <h3>الکسیه پوتلاس</h3>
+            <p>مهاجم | شماره 11</p>
+            <p>کاپیتان تیم و برنده توپ طلای فوتبال زنان جهان.</p>
+          </div>
+        </div>
+        <div class="player-card">
+          <img src="https://ts16.tarafdari.com/contents/user642728/news/photo_2024-02-15_11-31-49.jpg" alt="جس فوتریهام" />
+          <div class="player-info">
+            <h3>جس فوتریهام</h3>
+            <p>مدافع | شماره 5</p>
+            <p>یکی از بهترین مدافعان تیم با قدرت دفاعی بالا.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  
+    <section id="gallery" class="section gallery">
+      <h2>گالری تصاویر بارسلونا</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://ts7.tarafdari.com/contents/user6984/news/sergio_ramos_of_reral_madrid_pushes_carles_puyols_face_2ndr_during_the_la_liga_match_between_barcelona_and_real_madrid.jpg" alt="نیوکمپ در بازی" />
+          <p class="caption">نیوکمپ در بازی بارسلونا - رئال مادرید</p>
+        </div>
+        <div class="gallery-item">
+          <img src="https://cdn.oddrun.ir/@s/news/images/2020/12/30/16093217307938.jpeg" alt="تیم بارسلونا ۲۰۲۰" />
+          <p class="caption">تیم بارسلونا ۲۰۲۰</p>
+        </div>
+        <div class="gallery-item">
+          <img src="https://cdn.oddrun.ir/@s/news/images/2020/05/13/15894056478153.jpeg" alt="جشن قهرمانی" />
+          <p class="caption">جشن قهرمانی لیگ قهرمانان اروپا ۲۰۱۵</p>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="videos" class="section videos">
+      <h2>گل‌های به یادماندنی بارسلونا</h2>
+      <div class="video-grid">
+        <div class="video-card">
+          <iframe src="https://www.youtube.com/embed/2z8JmcrW-As" title="گل مسی به رئال مادرید" allowfullscreen></iframe>
+          <h4>گل لیونل مسی به رئال مادرید (۲۰۱۷)</h4>
+        </div>
+        <div class="video-card">
+          <iframe src="https://www.youtube.com/embed/KoQ8QexM_lg" title="گل ژاوی به منچستر یونایتد" allowfullscreen></iframe>
+          <h4>گل ژاوی به منچستر یونایتد (۲۰۰۹)</h4>
+        </div>
+        <div class="video-card">
+          <iframe src="https://www.youtube.com/embed/f2upS8puWj4" title="گل آندرس اینیستا به چلسی" allowfullscreen></iframe>
+          <h4>گل آندرس اینیستا به چلسی (۲۰۱۲)</h4>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
